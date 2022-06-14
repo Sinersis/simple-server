@@ -1,11 +1,15 @@
 package main
 
 import (
+	"easy-server/tools/git"
+	"easy-server/tools/nginx"
+	"easy-server/tools/node"
+	"easy-server/tools/php"
+	"easy-server/tools/preinstall"
+	"easy-server/tools/runner"
+	"easy-server/user"
 	"github.com/codegangsta/cli"
-	"github.com/creack/pty"
-	"io"
 	"os"
-	"os/exec"
 )
 
 /**
@@ -19,75 +23,50 @@ func main() {
 	app.Usage = "Install all you need for new php web server"
 	app.Commands = []cli.Command{
 		{
-			Name:   "check",
-			Usage:  "Check Command",
-			Action: checkCommand,
+			Name:   "start",
+			Usage:  "Test run",
+			Action: run,
 		},
 	}
 
-	app.Run(os.Args)
+	_ = app.Run(os.Args)
+}
+func run(_ *cli.Context) {
+	user.AddExecutor()
+	user.AddSudo()
+
+	preinstall.PreInstall()
+	git.Install()
+	nginx.Install()
+	node.Install()
+	php.Install()
+	//composer.Install()
+	runner.Install()
+
 }
 
-func checkCommand(ctx *cli.Context) {
-
-	/**
-	Best Practice with commands
-	*/
-
-	c := exec.Command("ls")
-	f, err := pty.Start(c)
-	if err != nil {
-		panic(err)
-	}
-
-	go func() {
-		f.Write([]byte{}) // EOT
-	}()
-	io.Copy(os.Stdout, f)
-
-	//cmd := "brew upgrade"
-	//out := exec.Command("bash", "-c", cmd)
-	//
-	//pr, err := out.CombinedOutput()
-	//
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
-	//
-	//fmt.Println(string(pr))
-}
-
-func checkAnyUsers(ctx *cli.Context) {
-	//checked if any users with name service or web
-}
-
-func baseCommandsBeforeInstall(ctx *cli.Context) {
-	// apt update
-	// apt upgrade
-}
-
-func createSudoUser(ctx *cli.Context) {
-	// create non root sudo user
-}
-
-func createExecuteUser(ctx *cli.Context) {
-	// create web or execute user
-}
-
-func installNode(ctx *cli.Context) {
-	// install node (before last version) (after checked version or nvm)
-}
-
-func installNginx(ctx *cli.Context) {
-	// install Nginx (last version) (for execute user config)
-}
-func installPhp(ctx *cli.Context) {
-	// install Php (**with base library) (before last version) (after checked version)
-}
-func installMySql(ctx *cli.Context) {
-	// install MySql (last version)
-}
-
-func installGitlabRunner(ctx *cli.Context) {
-	// install gitlab runner (for execute user config)
-}
+//func installNode(ctx *cli.Context) {
+//	preinstall.PreInstall()
+//}
+//
+//func installNginx(ctx *cli.Context) {
+//	preinstall.PreInstall()
+//}
+//func installPhp(ctx *cli.Context) {
+//	preinstall.PreInstall()
+//}
+//func installMySql(ctx *cli.Context) {
+//	preinstall.PreInstall()
+//}
+//
+//func installGitlabRunner(ctx *cli.Context) {
+//	preinstall.PreInstall()
+//}
+//
+//func installGit(ctx *cli.Context) {
+//	preinstall.PreInstall()
+//}
+//
+//func installComposer(ctx *cli.Context) {
+//	preinstall.PreInstall()
+//}
