@@ -1,6 +1,7 @@
 package user
 
 import (
+	"easy-server/pwd"
 	"github.com/creack/pty"
 	"io"
 	"log"
@@ -19,7 +20,7 @@ func AddExecutor() {
 	}
 
 	_, _ = io.Copy(os.Stdout, command)
-	createPwdFile("web", "s3cr3tP4ssW0rd")
+	pwd.AddPwdToFile("web", "s3cr3tP4ssW0rd")
 }
 
 func AddSudo() {
@@ -33,14 +34,13 @@ func AddSudo() {
 	}
 
 	_, _ = io.Copy(os.Stdout, command)
-	createPwdFile("service", "s3cr3tP4ssW0rd")
-	disableSudoPassword()
+	pwd.AddPwdToFile("service", "s3cr3tP4ssW0rd")
+	disableSudoPassword("service")
 }
 
-func disableSudoPassword() {
+func disableSudoPassword(userName string) {
 
-	cmd := "cp /etc/sudoers ./sudoers.bak; echo 'service ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/service"
-	//cmd := "echo '$USER ALL=(ALL:ALL) NOPASSWD: ALL' | sudo tee '/etc/sudoers.d/dont-prompt-$USER-for-sudo-password'"
+	cmd := "echo 'service ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/" + userName
 
 	out := exec.Command("bash", "-c", cmd)
 
@@ -52,17 +52,4 @@ func disableSudoPassword() {
 
 	_, _ = io.Copy(os.Stdout, command)
 
-}
-
-func createPwdFile(userName string, userPwd string) {
-	cmd := "echo 'username: " + userName + " password: " + userPwd + "' >> ./password"
-	out := exec.Command("bash", "-c", cmd)
-
-	command, err := pty.Start(out)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	_, _ = io.Copy(os.Stdout, command)
 }

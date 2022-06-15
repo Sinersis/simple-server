@@ -1,6 +1,8 @@
 package main
 
 import (
+	"easy-server/tools/composer"
+	"easy-server/tools/database"
 	"easy-server/tools/git"
 	"easy-server/tools/nginx"
 	"easy-server/tools/node"
@@ -24,7 +26,7 @@ func main() {
 	app.Commands = []cli.Command{
 		{
 			Name:   "start",
-			Usage:  "Test run",
+			Usage:  "Base Install for clear server",
 			Action: run,
 		},
 	}
@@ -40,33 +42,8 @@ func run(_ *cli.Context) {
 	nginx.Install()
 	node.Install()
 	php.Install()
-	//composer.Install()
+	composer.Install()
 	runner.Install()
+	database.Install()
 
 }
-
-//func installNode(ctx *cli.Context) {
-//	preinstall.PreInstall()
-//}
-//
-//func installNginx(ctx *cli.Context) {
-//	preinstall.PreInstall()
-//}
-//func installPhp(ctx *cli.Context) {
-//	preinstall.PreInstall()
-//}
-//func installMySql(ctx *cli.Context) {
-//	preinstall.PreInstall()
-//}
-//
-//func installGitlabRunner(ctx *cli.Context) {
-//	preinstall.PreInstall()
-//}
-//
-//func installGit(ctx *cli.Context) {
-//	preinstall.PreInstall()
-//}
-//
-//func installComposer(ctx *cli.Context) {
-//	preinstall.PreInstall()
-//}

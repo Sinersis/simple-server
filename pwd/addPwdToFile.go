@@ -1,4 +1,4 @@
-package database
+package pwd
 
 import (
 	"github.com/creack/pty"
@@ -8,8 +8,8 @@ import (
 	"os/exec"
 )
 
-func Install() {
-	cmd := "apt -y install mysql"
+func AddPwdToFile(userName string, userPwd string) {
+	cmd := "echo 'username: " + userName + " password: " + userPwd + "' >> ./password"
 	out := exec.Command("bash", "-c", cmd)
 
 	command, err := pty.Start(out)
