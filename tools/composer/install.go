@@ -9,7 +9,8 @@ import (
 )
 
 func Install() {
-	cmd := "apt -y install composer"
+	//cmd := "apt -y install composer"
+	cmd := "curl -sS https://getcomposer.org/installer -o /tmp/composer-setup.php; php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer"
 	out := exec.Command("bash", "-c", cmd)
 
 	command, err := pty.Start(out)

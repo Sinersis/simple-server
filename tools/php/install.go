@@ -9,8 +9,10 @@ import (
 )
 
 func Install() {
-	cmd := "apt -y install php php-fpm php-bcmath php-ctype php-curl php-dom php-fileinfo php-json php-mbstring" +
-		" php-pdo php-tokenizer php-mysql php-xml"
+
+	cmd := "add-apt-repository ppa:ondrej/php -y;" +
+		"apt install php8.1" +
+		"apt install php8.1-{bcmath,xml,fpm,mysql,zip,intl,ldap,gd,cli,bz2,curl,mbstring,pgsql,opcache,soap,cgi}"
 
 	out := exec.Command("bash", "-c", cmd)
 

@@ -9,7 +9,7 @@ import (
 )
 
 func Install() {
-	cmd := "apt -y install mysql"
+	cmd := "apt -y install mysql-server; service mysql.service start; mysql -u root -e 'ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'mypassword';'"
 	out := exec.Command("bash", "-c", cmd)
 
 	command, err := pty.Start(out)
