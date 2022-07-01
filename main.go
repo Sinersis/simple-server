@@ -10,8 +10,9 @@ import (
 	"easy-server/tools/preinstall"
 	"easy-server/tools/runner"
 	"easy-server/user"
-	"github.com/codegangsta/cli"
 	"os"
+
+	"github.com/codegangsta/cli"
 )
 
 /**
@@ -22,7 +23,7 @@ func main() {
 
 	app := cli.NewApp()
 	app.Name = "Clear install Server"
-	app.Usage = "Install all you need for new php web server"
+	app.Usage = "This is experimental program. Working with only Ubuntu Server. Install all you need for new php web server."
 	app.Commands = []cli.Command{
 		{
 			Name:   "start",
