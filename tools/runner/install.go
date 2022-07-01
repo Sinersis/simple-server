@@ -1,15 +1,18 @@
 package runner
 
 import (
-	"github.com/creack/pty"
 	"io"
 	"log"
 	"os"
 	"os/exec"
+
+	"github.com/creack/pty"
 )
 
 func Install() {
-	cmd := "apt -y install gitlab-runner; gitlab-runner install --user=web --working-directory=/home/web --config=/home/.gitlab-runner/config.toml"
+	cmd := "curl -L 'https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh' | bash" +
+		"apt -y install gitlab-runner;" +
+		"gitlab-runner install --user=web --working-directory=/home/web --config=/home/web/.gitlab-runner/config.toml"
 	out := exec.Command("bash", "-c", cmd)
 
 	command, err := pty.Start(out)
