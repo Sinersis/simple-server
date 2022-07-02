@@ -22,8 +22,8 @@ Execute from root or sudo user
 func main() {
 
 	app := cli.NewApp()
-	app.Name = "Clear install Server"
-	app.Usage = "This is experimental program. Working with only Ubuntu Server. Install all you need for new php web server."
+	app.Name = "Easy Server Config"
+	app.Usage = "This is experimental program. Working with only Ubuntu Server. This tool installed all for you need for your PHP server, for framework Laravel"
 	app.Commands = []cli.Command{
 		{
 			Name:   "start",
