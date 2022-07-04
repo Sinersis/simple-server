@@ -1,15 +1,16 @@
 package node
 
 import (
-	"github.com/creack/pty"
 	"io"
 	"log"
 	"os"
 	"os/exec"
+
+	"github.com/creack/pty"
 )
 
 func Install() {
-	cmd := "apt -y install node"
+	cmd := "wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash;"
 	out := exec.Command("bash", "-c", cmd)
 
 	command, err := pty.Start(out)
