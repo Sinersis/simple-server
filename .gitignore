@@ -1,2 +1,4 @@
 .idea
 /Dockerfile
+.DS_Store
+easy_server
