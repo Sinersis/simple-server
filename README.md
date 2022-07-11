@@ -20,3 +20,29 @@ everything should work like clockwork and be configured literally in one command
 7. Install MySQL
 8. Install Node
 9. Install Git
+
+## Install
+
+### **Attention! This is an experimental program. Something may be working incorrectly. All problems can be sent to the "Problems" section.**
+
+
+
+Go home dir:
+```bash
+cd ~
+```
+
+Download binary file:
+```bash
+wget https://github.com/Sinersis/simple-server/releases/download/0.0.1/easy-server
+```
+
+Set chmod:
+```bash
+chmod +x ./easy-server
+```
+
+And just run:
+```bash
+./easy-server start
+```
