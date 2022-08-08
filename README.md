@@ -44,5 +44,5 @@ chmod +x ./easy-server
 
 And just run:
 ```bash
-./easy-server start
+./easy-server default
 ```
