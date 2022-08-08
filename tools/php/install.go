@@ -1,6 +1,8 @@
 package php
 
 import (
+	"easy-server/service"
+	"fmt"
 	"io"
 	"log"
 	"os"
@@ -9,7 +11,11 @@ import (
 	"github.com/creack/pty"
 )
 
-func Install() {
+func Install(enableStdOur bool) {
+
+	if !enableStdOur {
+		fmt.Print(service.PrintInfoText("PHP 8"))
+	}
 
 	cmd := "add-apt-repository ppa:ondrej/php -y;" +
 		"apt install php8.1 -y;" +
@@ -33,11 +39,22 @@ func Install() {
 
 	out := exec.Command("bash", "-c", cmd)
 
-	command, err := pty.Start(out)
+	if enableStdOur {
+		command, err := pty.Start(out)
 
-	if err != nil {
-		log.Fatal(err)
+		if err != nil {
+			fmt.Print(service.PrintErrorText())
+			log.Fatal(err)
+		}
+
+		_, _ = io.Copy(os.Stdout, command)
+	} else {
+		err := out.Run()
+
+		if err != nil {
+			fmt.Print(service.PrintErrorText())
+		}
+
+		fmt.Print(service.PrintDoneText())
 	}
-
-	_, _ = io.Copy(os.Stdout, command)
 }
